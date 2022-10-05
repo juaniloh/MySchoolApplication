@@ -35,7 +35,7 @@ class SchoolLocalRepository(
         }
     }
 
-    override suspend fun fetchSchoolFromSource(): List<SchoolSimp> =
+    override suspend fun fetchSchoolsFromSource(): List<SchoolSimp> =
         try {
             getSchoolsFromLocal()
         } catch (e: Throwable) {

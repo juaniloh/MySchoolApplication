@@ -10,7 +10,7 @@ class SchoolSourceRepository(
     private val api: Api,
     private val dispatcher: CoroutineDispatcher = Dispatchers.IO,
     ): SchoolSourceRepositoryContract {
-        override suspend fun fetchSchoolFromSource(): List<SchoolSimp> =
+        override suspend fun fetchSchoolsFromSource(): List<SchoolSimp> =
             withContext(dispatcher) {
                 api.getSchool()
             }
