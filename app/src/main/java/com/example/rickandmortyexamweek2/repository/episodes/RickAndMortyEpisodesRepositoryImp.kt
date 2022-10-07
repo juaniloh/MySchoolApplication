@@ -10,7 +10,6 @@ class RickAndMortyEpisodesRepositoryImp(
     private val rickAndMortyAPI: RickAndMortyAPI,
     private val dispatcher: CoroutineDispatcher = Dispatchers.IO
 ): RickAndMortyEpisodesRepository {
-
     override suspend fun fetchRickAndMortyEpisodes(): RickAndMortyEpisodesResponse =
         withContext(dispatcher) {
             try {

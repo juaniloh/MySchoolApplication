@@ -2,7 +2,6 @@ package com.example.rickandmortyexamweek2.data
 
 import com.google.gson.annotations.SerializedName
 
-
 data class Results(
     @SerializedName("id") var id: Int? = null,
     @SerializedName("name") var name: String? = null,

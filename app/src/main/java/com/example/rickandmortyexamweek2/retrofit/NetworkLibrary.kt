@@ -5,7 +5,6 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 object NetworkLibrary {
-
     private const val BASE_URL = "https://rickandmortyapi.com/api/"
 
     private val okHttpClient: OkHttpClient by lazy {

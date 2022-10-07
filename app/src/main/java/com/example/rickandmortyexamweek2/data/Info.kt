@@ -2,7 +2,6 @@ package com.example.rickandmortyexamweek2.data
 
 import com.google.gson.annotations.SerializedName
 
-
 data class Info (
     @SerializedName("count" ) var count : Int?    = null,
     @SerializedName("pages" ) var pages : Int?    = null,
