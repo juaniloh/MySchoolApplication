@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">RickAndMortyExamWeek2</string>
+    <string name="name_episode_adapter">Name</string>
+    <string name="episode_episode_adapter">Episode</string>
+    <string name="airtime_episode_adapter">AirTime</string>
+    <string name="rick_and_morty_episodes_fragment_rick_and_morty">Rick and Morty episodes</string>
 </resources>
