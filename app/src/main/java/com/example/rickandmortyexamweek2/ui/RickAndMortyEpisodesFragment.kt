@@ -13,10 +13,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.rickandmortyexamweek2.data.EpisodeInfo
 import com.example.rickandmortyexamweek2.databinding.FragmentRickAndMortyEpisodesBinding
-import com.example.rickandmortyexamweek2.repository.episodes.RickAndMortyEpisodesRepository
-import com.example.rickandmortyexamweek2.repository.episodes.RickAndMortyEpisodesRepositoryImp
 import com.example.rickandmortyexamweek2.response.RickAndMortyEpisodesResponse
-import com.example.rickandmortyexamweek2.retrofit.NetworkLibrary
 import com.example.rickandmortyexamweek2.ui.adapter.AdapterListener
 import com.example.rickandmortyexamweek2.ui.adapter.EpisodeAdapter
 
@@ -25,16 +22,10 @@ class RickAndMortyEpisodesFragment : Fragment(), AdapterListener {
     private var _binding: FragmentRickAndMortyEpisodesBinding? = null
     private val binding get() = _binding!!
 
-    private val repository: RickAndMortyEpisodesRepository by lazy {
-        RickAndMortyEpisodesRepositoryImp(
-            NetworkLibrary.rickAndMortyAPI
-        )
-    }
-
     private val viewModel: RickAndMortyEpisodesViewModel by lazy {
         ViewModelProvider(
             this,
-            RickAndMortyEpisodesViewModelFactory(repository)
+            RickAndMortyEpisodesViewModelFactory()
         )[RickAndMortyEpisodesViewModel::class.java]
     }
 
@@ -62,14 +53,19 @@ class RickAndMortyEpisodesFragment : Fragment(), AdapterListener {
     private fun observing() {
         viewModel.episodes.observe(viewLifecycleOwner) {
             when (it) {
+                is RickAndMortyEpisodesResponse.Loading -> handleLoading()
                 is RickAndMortyEpisodesResponse.Failure -> handleFailure()
                 is RickAndMortyEpisodesResponse.Success -> handleSuccess(it)
             }
         }
     }
 
+    private fun handleLoading() {
+        Toast.makeText(context, LOADING_MESSAGE, Toast.LENGTH_SHORT).show()
+    }
+
     private fun handleFailure() {
-        Toast.makeText(context, "Error loading data, sorry", Toast.LENGTH_SHORT).show()
+        Toast.makeText(context, ERROR_MESSAGE, Toast.LENGTH_SHORT).show()
     }
 
     private fun handleSuccess(rickAndMortyEpisodesResponse: RickAndMortyEpisodesResponse.Success) {
@@ -88,12 +84,18 @@ class RickAndMortyEpisodesFragment : Fragment(), AdapterListener {
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
+        episodeAdapter = null
     }
 
     override fun onEpisodeSelected(episodeInfo: EpisodeInfo) {
         val intent = Intent(Intent.ACTION_VIEW)
         intent.data = Uri.parse(episodeInfo.url)
         startActivity(intent)
+    }
+
+    companion object {
+        private const val ERROR_MESSAGE = "Error loading data, sorry"
+        private const val LOADING_MESSAGE = "Loading episodes"
     }
 
 }

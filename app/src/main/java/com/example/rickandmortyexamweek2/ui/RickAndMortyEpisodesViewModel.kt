@@ -17,18 +17,25 @@ class RickAndMortyEpisodesViewModel(
     val episodes: LiveData<RickAndMortyEpisodesResponse> by lazy { _episodes }
 
     fun fetchRickAndMortyEpisodes() {
+        _episodes.postValue(RickAndMortyEpisodesResponse.Loading)
         viewModelScope.launch {
             when (val response = rickAndMortyEpisodesRepository.fetchRickAndMortyEpisodes()) {
                 is RickAndMortyEpisodesResponse.Failure -> {
-                    Log.e("E_TAG", "The error is: ${response.error}")
+                    Log.e(E_TAG, ERROR_MESSAGE + response.error)
                     _episodes.postValue(RickAndMortyEpisodesResponse.Failure(response.error))
                 }
                 is RickAndMortyEpisodesResponse.Success -> {
-                    Log.i("TAG", "This is the list: ${response.episodes}")
+                    Log.i(TAG, SUCCESS_MESSAGE + response.episodes)
                     _episodes.postValue(RickAndMortyEpisodesResponse.Success(response.episodes))
                 }
             }
         }
     }
 
+    companion object {
+        private const val TAG = "SUCCESS"
+        private const val E_TAG = "ERROR"
+        private const val ERROR_MESSAGE = "The error is: "
+        private const val SUCCESS_MESSAGE = "This is the list: "
+    }
 }

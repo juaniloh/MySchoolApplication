@@ -2,9 +2,9 @@ package com.example.rickandmortyexamweek2.data
 
 import com.google.gson.annotations.SerializedName
 
-data class Info (
-    @SerializedName("count" ) var count : Int?    = null,
-    @SerializedName("pages" ) var pages : Int?    = null,
-    @SerializedName("next"  ) var next  : String? = null,
-    @SerializedName("prev"  ) var prev  : String? = null,
+data class Info(
+    @SerializedName("count") val count: Int? = null,
+    @SerializedName("pages") val pages: Int? = null,
+    @SerializedName("next") val next: String? = null,
+    @SerializedName("prev") val prev: String? = null,
 )
