@@ -13,20 +13,23 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.rickandmortyexamweek2.data.EpisodeInfo
 import com.example.rickandmortyexamweek2.databinding.FragmentRickAndMortyEpisodesBinding
+import com.example.rickandmortyexamweek2.di.viewModel.RickAndMortyEpisodesViewModelFactory
 import com.example.rickandmortyexamweek2.response.RickAndMortyEpisodesResponse
 import com.example.rickandmortyexamweek2.ui.adapter.AdapterListener
 import com.example.rickandmortyexamweek2.ui.adapter.EpisodeAdapter
+import dagger.android.support.DaggerFragment
+import javax.inject.Inject
 
-class RickAndMortyEpisodesFragment : Fragment(), AdapterListener {
+class RickAndMortyEpisodesFragment : DaggerFragment(), AdapterListener {
 
     private var _binding: FragmentRickAndMortyEpisodesBinding? = null
     private val binding get() = _binding!!
 
+    @Inject
+    lateinit var viewModelFactory: ViewModelProvider.Factory
+
     private val viewModel: RickAndMortyEpisodesViewModel by lazy {
-        ViewModelProvider(
-            this,
-            RickAndMortyEpisodesViewModelFactory()
-        )[RickAndMortyEpisodesViewModel::class.java]
+        ViewModelProvider(requireActivity(), viewModelFactory)[RickAndMortyEpisodesViewModel::class.java]
     }
 
     private var episodeAdapter: EpisodeAdapter? = null

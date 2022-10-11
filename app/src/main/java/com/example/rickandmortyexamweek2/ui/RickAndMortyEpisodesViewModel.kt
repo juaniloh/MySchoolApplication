@@ -8,8 +8,9 @@ import androidx.lifecycle.viewModelScope
 import com.example.rickandmortyexamweek2.repository.episodes.RickAndMortyEpisodesRepository
 import com.example.rickandmortyexamweek2.response.RickAndMortyEpisodesResponse
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class RickAndMortyEpisodesViewModel(
+class RickAndMortyEpisodesViewModel @Inject constructor(
     private val rickAndMortyEpisodesRepository: RickAndMortyEpisodesRepository
 ): ViewModel() {
 
@@ -28,6 +29,9 @@ class RickAndMortyEpisodesViewModel(
                     Log.i(TAG, SUCCESS_MESSAGE + response.episodes)
                     _episodes.postValue(RickAndMortyEpisodesResponse.Success(response.episodes))
                 }
+                else -> {
+                    Log.i(L_TAG, LOADING_MESSAGE)
+                }
             }
         }
     }
@@ -35,7 +39,9 @@ class RickAndMortyEpisodesViewModel(
     companion object {
         private const val TAG = "SUCCESS"
         private const val E_TAG = "ERROR"
+        private const val L_TAG = "LOADING"
         private const val ERROR_MESSAGE = "The error is: "
         private const val SUCCESS_MESSAGE = "This is the list: "
+        private const val LOADING_MESSAGE = "Is loading..."
     }
 }
